@@ -5,8 +5,9 @@ test('Client App Login', async ({ page }) => {
 
     const email = "john.doe29@example.com";  
     const product = page.locator('.card-body');
-    // const nameCard = "John Doe";
+    const nameCard = "John Doe";
     const cardNumber = "4542 9931 9292 2293";
+    const cvv = "999";
     await page.goto('https://rahulshettyacademy.com/client/#/auth/login');
     await page.locator('#userEmail').fill(email);
     await page.locator('#userPassword').fill('StrongPass123!');
@@ -40,7 +41,16 @@ test('Client App Login', async ({ page }) => {
 
     await expect(page.locator('.user__name [type="text"]').first()).toHaveText(email);
     await page.locator('.input.txt.text-validated').first().fill(cardNumber);
-    await page.locator('.input.ddl').first().selectOption('05');
+    await page.locator('.input.ddl').first().selectOption('01');
+    await page.locator('.input.ddl').last().selectOption('25');
+    await page.locator('input[type="text"]').nth(1).fill(cvv);
+
+    await page.locator('input[type="text"]').nth(2).fill(nameCard);
+    await page.locator('input[name="coupon"]').fill('BLACKFRIDAY');
+
+    await page.locator('button[type="submit"]').click();
+
+    await page.waitForLoadState('networkidle');
     await page.pause();
 
 
