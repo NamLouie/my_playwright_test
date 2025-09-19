@@ -18,8 +18,6 @@ test('Client App Login with complete walkthrough', async ({ page }) => {
     await page.locator(".card-body").filter({hasText: "ZARA COAT 3"}).getByRole('button', {name: "Add To Cart"}).click();
 
     await page.getByRole("listitem").getByRole('button', {name:"Cart"}).click();
-
-    await page.locator('div li').first().waitFor();
     
     await expect(page.getByText("ZARA COAT 3")).toBeVisible();
 
