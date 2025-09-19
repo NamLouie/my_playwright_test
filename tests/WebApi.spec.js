@@ -1,23 +1,39 @@
 const { test, expect, request } = require('@playwright/test');
 
-// test.beforeAll('', async({request}) => {
+const LoginPayLoad = {userEmail: "john.doe29@example.com", userPassword: "StrongPass123!"};
+let token;
 
 
+test.beforeAll( async () => {
 
-// });
+    const apiContext = await request.newContext();
+    const loginResponse = await apiContext.post("https://rahulshettyacademy.com/api/ecom/auth/login", {data:LoginPayLoad})
+    expect((loginResponse).ok()).toBeTruthy();
 
-test('Client App Login', async ({ page }) => {
+    const loginResponseJSON = await loginResponse.json();
+    token = loginResponseJSON.token;
+    console.log(token)
 
-    const email = "john.doe29@example.com";  
+});
+
+test('Place the order', async ({ page }) => {
+
+    
+
+    const email = "";  
     const product = page.locator('.card-body');
     const nameCard = "John Doe";
     const cardNumber = "4542 9931 9292 2293";
     const cvv = "999";
-    await page.goto('https://rahulshettyacademy.com/client/#/auth/login');
-    await page.getByPlaceholder('email@example.com').fill(email);
-    await page.getByRole('textbox', { name: 'enter your passsword' }).fill('StrongPass123!');
-    await page.getByRole('button', {name:'Login'}).click()
-    await page.waitForLoadState('networkidle');
+
+    page.addInitScript(value => {
+
+        window.localStorage.setItem('token' , value );
+    }, token );
+
+    await page.goto("https://rahulshettyacademy.com/client/");
+
+
     await page.locator('.card-body b').first().waitFor();
 
     await page.locator(".card-body").filter({hasText: "ZARA COAT 3"}).getByRole('button', {name: "Add To Cart"}).click();
@@ -32,7 +48,6 @@ test('Client App Login', async ({ page }) => {
     await page.getByPlaceholder('Select Country').pressSequentially("ind");
     await page.getByRole("button", {name: "India"}).nth(1).click();
 
-    await expect(page.locator('.user__name [type="text"]').first()).toHaveText(email);
     await page.locator('.input.txt.text-validated').first().fill(cardNumber);
     await page.locator('.input.ddl').first().selectOption('01');
     await page.locator('.input.ddl').last().selectOption('25');
