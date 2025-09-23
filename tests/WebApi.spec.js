@@ -1,46 +1,28 @@
 const { test, expect, request } = require('@playwright/test');
-
+const {APiUtils} = require('./utils/APiUtils');  
 const LoginPayLoad = {userEmail: "john.doe29@example.com", userPassword: "StrongPass123!"};
 const orderPayLoad = {orders: [{country: "India", productOrderedId: "68a961459320a140fe1ca57a"}]};
-let token;
-let orderId;
-
+let response;
 
 test.beforeAll( async () => {
 
     const apiContext = await request.newContext();
-    const loginResponse = await apiContext.post("https://rahulshettyacademy.com/api/ecom/auth/login", {data:LoginPayLoad})
-    expect((loginResponse).ok()).toBeTruthy();
-
-    
-    //Login API
-    const loginResponseJSON = await loginResponse.json();
-    token = loginResponseJSON.token;
-    console.log(token);
-
-
-    //Handle Order Creation API
-    const createOrderResponse = await apiContext.post("https://rahulshettyacademy.com/api/ecom/order/create-order", {
-        data: orderPayLoad,
-        headers: {
-            "Authorization": token,
-            "Content-Type": "application/json"
-        },
-
-    })
-    const createOrderResponseJSON = await createOrderResponse.json();
-    console.log(createOrderResponseJSON);
-    orderId = createOrderResponseJSON.orders[0];
+    const apiUtils = new APiUtils(apiContext, LoginPayLoad);
+    response = await apiUtils.createOrder(orderPayLoad);
 
 });
 
 test('Place the order', async ({ page }) => {
 
+   
+    // const apiUtils = new ApiUtils(apiContext, LoginPayLoad);
+    // const orderId = createOrder(orderPayLoad);
+
     //Login API
     page.addInitScript(value => {
 
         window.localStorage.setItem('token' , value );
-    }, token );
+    }, response.token );
 
     await page.goto("https://rahulshettyacademy.com/client/");
     await page.getByRole('button',{name: "ORDERS"}).click();
@@ -50,7 +32,7 @@ test('Place the order', async ({ page }) => {
 
     for(let i = 0; i < await rows.count(); ++i) {
         const rowOrderId = await rows.nth(i).locator('th').textContent();
-        if(orderId.includes(rowOrderId)) {
+        if(response.orderId.includes(rowOrderId)) {
             await rows.nth(i).locator('button').first().click();
             break;
         }
@@ -58,7 +40,7 @@ test('Place the order', async ({ page }) => {
 
 
     const orderIdDetails = await page.locator(".col-text").textContent();
-    expect(orderId.includes(orderIdDetails)).toBeTruthy();
+    expect(response.orderId.includes(orderIdDetails)).toBeTruthy();
     
 
 
