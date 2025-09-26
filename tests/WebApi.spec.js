@@ -1,5 +1,5 @@
 const { test, expect, request } = require('@playwright/test');
-const {APiUtils} = require('./utils/APiUtils');  
+const {APiUtils} = require('../utils/APiUtils');  
 const LoginPayLoad = {userEmail: "john.doe29@example.com", userPassword: "StrongPass123!"};
 const orderPayLoad = {orders: [{country: "India", productOrderedId: "68a961459320a140fe1ca57a"}]};
 let response;
