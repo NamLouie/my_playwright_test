@@ -1,6 +1,6 @@
 const { test, expect } = require("@playwright/test");
 
-test("Pop up Validation", async ({ page }) => {
+test("@Web Pop up Validation", async ({ page }) => {
   await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
 
   await expect(page.locator("#displayed-text")).toBeVisible();
@@ -15,7 +15,7 @@ test("Pop up Validation", async ({ page }) => {
   console.log(textCheck.split(" ")[1]);
 });
 
-test("Screenshot & Visual comparison", async ({ page }) => {
+test("@Web Screenshot & Visual comparison", async ({ page }) => {
   await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
   await expect(page.locator("#displayed-text")).toBeVisible();
   await page

@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
 
 
-test('Client App Login with complete walkthrough', async ({ page }) => {
+test('@Web Client App Login with complete walkthrough', async ({ page }) => {
 
     const email = "john.doe29@example.com";  
     const product = page.locator('.card-body');

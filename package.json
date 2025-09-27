@@ -3,15 +3,18 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test tests/WebApi.spec.js --headed"
+    "regression": "npx playwright test",
+    "webTest": "npx playwright test --grep \"@Web\"",
+    "allureReport": "npx allure open ./allure-report"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@playwright/test": "^1.53.0",
-    "@types/node": "^24.0.1"
+    "@playwright/test": "^1.55.1",
+    "@types/node": "^24.0.1",
+    "allure-playwright": "^3.4.1"
   },
   "dependencies": {
     "exceljs": "^4.4.0"
