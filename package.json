@@ -5,16 +5,19 @@
   "scripts": {
     "regression": "npx playwright test",
     "webTest": "npx playwright test --grep \"@Web\"",
-    "allureReport": "npx allure open ./allure-report"
+    "allureReport": "npx allure open ./allure-report",
+    "CucumberRegression" : "npx cucumber-js --tags \"@Regression\" --exit --format html:cucumber-report.html --retry 1 --parallel 2"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@cucumber/cucumber": "^12.2.0",
     "@playwright/test": "^1.55.1",
     "@types/node": "^24.0.1",
-    "allure-playwright": "^3.4.1"
+    "allure-playwright": "^3.4.1",
+    "typescript": "^5.9.2"
   },
   "dependencies": {
     "exceljs": "^4.4.0"
