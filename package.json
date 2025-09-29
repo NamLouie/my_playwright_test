@@ -6,17 +6,20 @@
     "regression": "npx playwright test",
     "webTest": "npx playwright test --grep \"@Web\"",
     "allureReport": "npx allure open ./allure-report",
-    "CucumberRegression" : "npx cucumber-js --tags \"@Regression\" --exit --format html:cucumber-report.html --retry 1 --parallel 2"
+    "CucumberRegression": "npx cucumber-js --tags \"@Regression\" --exit --format html:cucumber-report.html --retry 1 --parallel 2"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@azure/identity": "^4.12.0",
+    "@azure/playwright": "^1.0.0",
     "@cucumber/cucumber": "^12.2.0",
     "@playwright/test": "^1.55.1",
     "@types/node": "^24.0.1",
     "allure-playwright": "^3.4.1",
+    "dotenv": "^17.2.2",
     "typescript": "^5.9.2"
   },
   "dependencies": {
