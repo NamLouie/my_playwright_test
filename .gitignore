@@ -6,3 +6,10 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /pages/js/
+/allure-results
+/allure-report
+/.allure
+/screenshots
+.env
+/playwright.service.config.js
+azure-pipeline.yml

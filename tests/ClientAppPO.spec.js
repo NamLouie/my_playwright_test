@@ -8,7 +8,6 @@ const dataset = JSON.parse(JSON.stringify(require("../utils/placeorderTestData.j
 
 for(const data of dataset){
 
-
 test(`Client App Login Page Object for ${data.productName}`, async ({ page }) => {
 
     const poManager = new POManager(page);
@@ -95,8 +94,8 @@ customTest.skip('Client Custom App', async ({ page, testDataForOrder }) => {
 
 
     //assignment
-    await page.locator('div li').first().waitFor();
-    await page.locator('text=Checkout').click();
+    await expect(page.getByRole('button', { name: 'Checkout' })).toBeVisible();
+    await page.getByRole('button', { name: 'Checkout' }).click();
     await page.locator('[placeholder*="Country"]').pressSequentially("ind");
     const dropdown = page.locator('.ta-results');
     await dropdown.waitFor();
